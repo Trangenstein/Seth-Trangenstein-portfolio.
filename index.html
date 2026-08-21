@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#F5F6F3">
 <title>Seth Trangenstein — Supply Chain Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -21,7 +23,7 @@
     --radius:2px;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth;background:#F5F6F3;}
   body{
     background:var(--paper);
     color:var(--navy);
@@ -195,23 +197,18 @@
     color:var(--navy);background:var(--white);
   }
 
-  /* ---------- research / papers ---------- */
+  /* ---------- research / papers / project cards ---------- */
   .paper-card{
     border:1px solid var(--line);background:var(--white);
     border-radius:var(--radius);margin-bottom:22px;overflow:hidden;
   }
   .paper-head{
-    padding:26px 28px;cursor:pointer;
+    padding:26px 28px;
     display:flex;justify-content:space-between;align-items:flex-start;gap:20px;
   }
   .paper-kicker{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--blueprint);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;}
   .paper-title{font-size:22px;margin-bottom:10px;}
   .paper-dek{color:var(--slate);font-size:14.5px;max-width:56ch;}
-  .paper-toggle{
-    font-family:'IBM Plex Mono',monospace;font-size:20px;color:var(--blueprint);
-    transition:transform .25s ease;flex-shrink:0;margin-top:4px;
-  }
-  .paper-card.open .paper-toggle{transform:rotate(45deg);}
   .paper-stats{
     display:grid;grid-template-columns:repeat(4,1fr);
     border-top:1px solid var(--line);
@@ -221,14 +218,84 @@
   .stat-num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:var(--flag);}
   .stat-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate);text-transform:uppercase;letter-spacing:0.04em;margin-top:4px;}
   @media(max-width:640px){.paper-stats{grid-template-columns:repeat(2,1fr);} .stat:nth-child(2){border-right:none;}}
-  .paper-body{
-    max-height:0;overflow:hidden;
-    transition:max-height .4s ease, padding .4s ease;
-  }
-  .paper-card.open .paper-body{max-height:600px;padding-bottom:6px;}
-  .paper-body-inner{padding:22px 28px 28px;border-top:1px solid var(--line);}
+  .paper-body-inner{padding:22px 28px 6px;border-top:1px solid var(--line);}
   .paper-body-inner h4{font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--slate);font-family:'IBM Plex Mono',monospace;font-weight:500;margin-bottom:8px;}
   .paper-body-inner p{color:var(--slate);font-size:14.5px;margin-bottom:14px;max-width:64ch;}
+  .card-cta-row{
+    border-top:1px solid var(--line);
+    padding:18px 28px;
+    display:flex;justify-content:flex-end;
+  }
+  .card-cta{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.03em;
+    color:var(--blueprint);display:inline-flex;align-items:center;gap:7px;
+    padding:9px 15px;border:1px solid var(--blueprint-dim);border-radius:var(--radius);
+    transition:background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .card-cta:hover{background:var(--blueprint);color:var(--white);border-color:var(--blueprint);}
+  .card-cta .arrow{font-size:13px;transition:transform .2s ease;}
+  .card-cta:hover .arrow{transform:translate(2px,-2px);}
+
+
+  /* ---------- flow diagram ---------- */
+  .flow-intro{color:var(--slate);max-width:64ch;margin-bottom:44px;font-size:15px;}
+  .flow-diagram{
+    position:relative;
+    border:1px solid var(--line);
+    background:var(--white);
+    border-radius:var(--radius);
+    padding:8px 0;
+  }
+  .flow-diagram svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+  .flow-path{fill:none;stroke:var(--blueprint-dim);stroke-width:1;opacity:0.55;}
+  .flow-path.dim{opacity:0.12;}
+  .flow-path.active{stroke:var(--blueprint);opacity:0.9;stroke-width:1.3;}
+  .flow-dot{fill:var(--blueprint);}
+  .flow-dot.dim{opacity:0.15;}
+  .tier-row{
+    position:relative;z-index:1;
+    display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+    gap:9px;padding:22px 26px;
+    border-bottom:1px dashed var(--line);
+    cursor:pointer;
+    transition:background .25s ease;
+  }
+  .tier-row:last-child{border-bottom:none;}
+  .tier-row:hover{background:rgba(46,125,166,0.045);}
+  .tier-row.active{background:rgba(46,125,166,0.08);}
+  .tier-heading{
+    width:100%;display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:14px;flex-wrap:wrap;gap:8px;
+  }
+  .tier-heading .t-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px;color:var(--navy-deep);}
+  .tier-heading .t-badge{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--blueprint);letter-spacing:0.05em;}
+  .node-chip{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+    background:var(--paper);border:1px solid var(--line);
+    padding:6px 11px;border-radius:var(--radius);
+    color:var(--navy);white-space:nowrap;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .tier-row[data-tier="primes"] .node-chip{
+    background:var(--navy-deep);border-color:var(--navy-deep);color:var(--paper);font-size:12.5px;padding:8px 14px;
+  }
+  .tier-row.active .node-chip{border-color:var(--blueprint-dim);}
+  .flow-info{
+    margin-top:26px;border:1px solid var(--line);background:var(--paper-dim);
+    border-radius:var(--radius);padding:22px 26px;
+    min-height:96px;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .flow-info .fi-tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--blueprint);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;}
+  .flow-info p{color:var(--navy);font-size:14.5px;max-width:70ch;}
+  .flow-hint{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--slate);
+    text-align:center;padding:12px 0 2px;letter-spacing:0.04em;
+  }
+  @media(max-width:640px){
+    .tier-row{padding:18px 16px;gap:6px;}
+    .node-chip{font-size:10.5px;padding:5px 9px;}
+  }
 
   /* ---------- resume / contact ---------- */
   .resume-cta{
@@ -281,7 +348,9 @@
     <nav><ul>
       <li><a href="#about">About</a></li>
       <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
       <li><a href="#research">Research</a></li>
+      <li><a href="#flow">Flow</a></li>
       <li><a href="#resume">Resume</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul></nav>
@@ -407,11 +476,47 @@
   </div>
 </section>
 
+<!-- PROJECTS -->
+<section id="projects" style="background:var(--paper-dim);">
+  <div class="wrap reveal">
+    <div class="node" style="top:60px"></div>
+    <div class="node-label" style="top:60px">Node 03 — Projects</div>
+    <div class="section-head">
+      <h2>Projects</h2>
+      <span class="section-tag">Tools built on the job</span>
+    </div>
+    <p class="flow-intro">Reporting tools I've built to close visibility gaps — the unglamorous Excel-and-SAP work that keeps a planning team ahead of problems instead of reacting to them.</p>
+
+    <div class="paper-card" id="project1">
+      <div class="paper-head">
+        <div>
+          <div class="paper-kicker">Internal Tool · Excel + SAP</div>
+          <div class="paper-title">Aged WIP Visibility Tracker</div>
+          <div class="paper-dek">A workbook that pulls daily SAP WIP exports and flags work-in-process sitting past aging thresholds, so shortages get caught before they turn into schedule misses.</div>
+        </div>
+      </div>
+      <div class="paper-stats">
+        <div class="stat"><div class="stat-num">Daily</div><div class="stat-label">Refresh cadence from SAP exports</div></div>
+        <div class="stat"><div class="stat-num">3 Tiers</div><div class="stat-label">Watch / Aging / Critical flags</div></div>
+        <div class="stat"><div class="stat-num">INDEX/MATCH</div><div class="stat-label">Core formula engine</div></div>
+        <div class="stat"><div class="stat-num">Weekly</div><div class="stat-label">Leadership rollup cadence</div></div>
+      </div>
+      <div class="paper-body-inner">
+        <h4>The problem</h4>
+        <p>Work-in-process had no standing visibility once it entered the system. A job could sit well past its normal cycle time — waiting on a part, a routing step, or a floor packet discrepancy — and nobody would know until it showed up as a missed ship date. Aging WIP was invisible until it was already a crisis.</p>
+      </div>
+      <div class="card-cta-row">
+        <a class="card-cta" href="projects/aged-wip-visibility-tracker.html">Read the full case study <span class="arrow">↗</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- RESEARCH / PROJECTS -->
 <section id="research">
   <div class="wrap reveal">
     <div class="node" style="top:60px"></div>
-    <div class="node-label" style="top:60px">Node 03 — Research</div>
+    <div class="node-label" style="top:60px">Node 04 — Research</div>
     <div class="section-head">
       <h2>Research &amp; writing</h2>
       <span class="section-tag">Defense supply chain</span>
@@ -421,13 +526,12 @@
     </p>
 
     <div class="paper-card" id="paper1">
-      <div class="paper-head" onclick="togglePaper('paper1')">
+      <div class="paper-head">
         <div>
           <div class="paper-kicker">Supply Chain Report · Aug 2026</div>
           <div class="paper-title">The Pentagon's Supply Chain: How It's Built, Where It Breaks</div>
           <div class="paper-dek">A structural map of the U.S. defense industrial base — from five prime contractors down through thousands of sub-tier suppliers to the raw minerals underneath — and what Washington is doing to shore it up.</div>
         </div>
-        <div class="paper-toggle">+</div>
       </div>
       <div class="paper-stats">
         <div class="stat"><div class="stat-num">200K+</div><div class="stat-label">Suppliers feeding DoD production</div></div>
@@ -435,23 +539,22 @@
         <div class="stat"><div class="stat-num">~90%</div><div class="stat-label">Rare-earth processing via China</div></div>
         <div class="stat"><div class="stat-num">$3.2B</div><div class="stat-label">DoD industrial-base investment FY18–24</div></div>
       </div>
-      <div class="paper-body">
-        <div class="paper-body-inner">
-          <h4>What it covers</h4>
-          <p>The defense industrial base isn't a chain, it's a pyramid: five primes (Lockheed Martin, RTX, Northrop Grumman, General Dynamics, Boeing) sit on top of thin-margin, thinly-capitalized tier-2 and tier-3 suppliers the government has almost no visibility into. Below that, the entire base runs through a handful of chokepoints — rare-earth and critical-mineral processing dominated by China, and a semiconductor supply chain built on mature process nodes rather than leading-edge silicon.</p>
-          <p>The second half tracks the federal response: Defense Production Act Title III funding, DoD's equity stake in MP Materials, and the CHIPS-funded Microelectronics Commons — set against a 2027 deadline to phase out Chinese-origin material, and analysts' warnings that the dependency won't unwind with a single investment.</p>
-        </div>
+      <div class="paper-body-inner">
+        <h4>What it covers</h4>
+        <p>The defense industrial base isn't a chain, it's a pyramid: five primes (Lockheed Martin, RTX, Northrop Grumman, General Dynamics, Boeing) sit on top of thin-margin, thinly-capitalized tier-2 and tier-3 suppliers the government has almost no visibility into. Below that, the entire base runs through a handful of chokepoints — rare-earth and critical-mineral processing dominated by China, and a semiconductor supply chain built on mature process nodes rather than leading-edge silicon.</p>
+      </div>
+      <div class="card-cta-row">
+        <a class="card-cta" href="papers/pentagons-supply-chain.pdf" target="_blank" rel="noopener">Read the full paper (PDF) <span class="arrow">↗</span></a>
       </div>
     </div>
 
     <div class="paper-card" id="paper2">
-      <div class="paper-head" onclick="togglePaper('paper2')">
+      <div class="paper-head">
         <div>
           <div class="paper-kicker">Oversight Desk Investigation · Aug 2026</div>
           <div class="paper-title">Price Gouging in the Military-Industrial Complex</div>
           <div class="paper-dek">How three structural gaps in federal pricing law let sole-source contractors overcharge the Pentagon — and why disclosure bills moving through Congress still don't touch the root cause.</div>
         </div>
-        <div class="paper-toggle">+</div>
       </div>
       <div class="paper-stats">
         <div class="stat"><div class="stat-num">7,943%</div><div class="stat-label">Markup on a C-17 soap dispenser</div></div>
@@ -459,22 +562,97 @@
         <div class="stat"><div class="stat-num">$431B</div><div class="stat-label">FY2023 Pentagon contract obligations</div></div>
         <div class="stat"><div class="stat-num">401</div><div class="stat-label">Cost-data requests refused, FY2022</div></div>
       </div>
-      <div class="paper-body">
-        <div class="paper-body-inner">
-          <h4>What it covers</h4>
-          <p>Traces the "commercial item" loophole, sole-source leverage, and cost-plus incentive structures that let contractors set prices with no market to prove them against — walked through four case studies: TransDigm's acquire-then-raise-prices playbook, an 80x markup on Boeing C-17 spare parts, redacted overcharges at Bell Helicopter, and F-35 sustainment costs climbing as readiness falls.</p>
-          <p>Closes with the 2025–26 legislative response: five bipartisan bills that require contractors to disclose price jumps after the fact, folded into an NDAA that also repeals roughly 80 procurement regulations — a disclosure-not-prevention tradeoff the piece leaves as an open question.</p>
-        </div>
+      <div class="paper-body-inner">
+        <h4>What it covers</h4>
+        <p>Traces the "commercial item" loophole, sole-source leverage, and cost-plus incentive structures that let contractors set prices with no market to prove them against — walked through four case studies: TransDigm's acquire-then-raise-prices playbook, an 80x markup on Boeing C-17 spare parts, redacted overcharges at Bell Helicopter, and F-35 sustainment costs climbing as readiness falls.</p>
+      </div>
+      <div class="card-cta-row">
+        <a class="card-cta" href="papers/price-gouging-military-industrial-complex.pdf" target="_blank" rel="noopener">Read the full paper (PDF) <span class="arrow">↗</span></a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- RESUME / CONTACT -->
-<section id="resume" style="background:var(--paper-dim);">
+<!-- FLOW DIAGRAM -->
+<section id="flow" style="background:var(--paper-dim);">
   <div class="wrap reveal">
     <div class="node" style="top:60px"></div>
-    <div class="node-label" style="top:60px">Node 04 — Contact</div>
+    <div class="node-label" style="top:60px">Node 05 — Flow</div>
+    <div class="section-head">
+      <h2>How a part actually gets to a flight line</h2>
+      <span class="section-tag">Click a tier</span>
+    </div>
+    <p class="flow-intro">A finished weapon system is the last stop on a funnel that starts underground. Every tier below the primes narrows the field — and loses visibility. This is the same structure I mapped in the research above, drawn out.</p>
+
+    <div class="flow-diagram" id="flowDiagram">
+      <svg id="flowSvg"></svg>
+
+      <div class="tier-row" data-tier="primes">
+        <div class="tier-heading"><span class="t-name">Prime Contractors</span><span class="t-badge">5 FIRMS · ~2/3 OF DOD CONTRACT VALUE</span></div>
+        <span class="node-chip">Lockheed Martin</span>
+        <span class="node-chip">RTX</span>
+        <span class="node-chip">Northrop Grumman</span>
+        <span class="node-chip">General Dynamics</span>
+        <span class="node-chip">Boeing</span>
+      </div>
+
+      <div class="tier-row" data-tier="tier1">
+        <div class="tier-heading"><span class="t-name">Tier 1 Suppliers</span><span class="t-badge">MAJOR SUBSYSTEMS</span></div>
+        <span class="node-chip">Airframe Structures</span>
+        <span class="node-chip">Avionics Systems</span>
+        <span class="node-chip">Propulsion Modules</span>
+        <span class="node-chip">Landing Gear</span>
+        <span class="node-chip">Sensor Arrays</span>
+        <span class="node-chip">Actuation Systems</span>
+      </div>
+
+      <div class="tier-row" data-tier="tier23">
+        <div class="tier-heading"><span class="t-name">Tier 2 / Tier 3 Suppliers</span><span class="t-badge">COMPONENTS, CASTINGS, ELECTRONICS</span></div>
+        <span class="node-chip">Castings</span>
+        <span class="node-chip">Forgings</span>
+        <span class="node-chip">Fasteners</span>
+        <span class="node-chip">Machined Parts</span>
+        <span class="node-chip">Composites</span>
+        <span class="node-chip">Wiring Harnesses</span>
+        <span class="node-chip">Bearings</span>
+        <span class="node-chip">Seals &amp; Gaskets</span>
+        <span class="node-chip">Circuit Boards</span>
+        <span class="node-chip">Connectors</span>
+
+      </div>
+
+      <div class="tier-row" data-tier="raw">
+        <div class="tier-heading"><span class="t-name">Raw Materials &amp; Minerals</span><span class="t-badge">200,000+ SUPPLIERS FEED THIS BASE</span></div>
+        <span class="node-chip">Titanium</span>
+        <span class="node-chip">Aluminum</span>
+        <span class="node-chip">Rare-Earth Elements</span>
+        <span class="node-chip">Gallium</span>
+        <span class="node-chip">Tungsten</span>
+        <span class="node-chip">Antimony</span>
+        <span class="node-chip">Germanium</span>
+        <span class="node-chip">Tellurium</span>
+        <span class="node-chip">Cobalt</span>
+        <span class="node-chip">Nickel Alloys</span>
+        <span class="node-chip">Carbon Fiber</span>
+        <span class="node-chip">Steel Alloys</span>
+        <span class="node-chip">Copper</span>
+        <span class="node-chip">Silicon</span>
+      </div>
+    </div>
+
+    <div class="flow-info" id="flowInfo">
+      <div class="fi-tag">Overview</div>
+      <p id="flowInfoText">Materials flow up, from raw ore to finished system — and the field narrows at every step. Click any tier above to see where it fits and why it matters.</p>
+    </div>
+    <div class="flow-hint">Diagram built from public DoD, GAO, and CRS data cited in the research above</div>
+  </div>
+</section>
+
+<!-- RESUME / CONTACT -->
+<section id="resume" style="background:var(--white);">
+  <div class="wrap reveal">
+    <div class="node" style="top:60px"></div>
+    <div class="node-label" style="top:60px">Node 06 — Contact</div>
     <div class="resume-cta">
       <div>
         <h3>Full resume, one click away.</h3>
@@ -507,10 +685,6 @@
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  function togglePaper(id){
-    document.getElementById(id).classList.toggle('open');
-  }
-
   // scroll reveal
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries)=>{
@@ -530,6 +704,135 @@
       }
     });
   });
+
+  // ---------- supply chain flow diagram ----------
+  (function(){
+    const svgns = 'http://www.w3.org/2000/svg';
+    const container = document.getElementById('flowDiagram');
+    const svg = document.getElementById('flowSvg');
+    if(!container || !svg) return;
+
+    const order = ['raw','tier23','tier1','primes']; // bottom to top, material flow direction
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let particles = [];
+    let rafId = null;
+
+    const tierInfo = {
+      raw: {
+        tag: 'Raw Materials & Minerals',
+        text: "200,000+ suppliers feed DoD weapons and parts production. China controls about 90% of global rare-earth magnet processing — a chokepoint that touches more than 80,000 distinct parts across roughly 1,900 weapon systems."
+      },
+      tier23: {
+        tag: 'Tier 2 / Tier 3 Suppliers',
+        text: "A single missile or aircraft program can lean on hundreds of subcontractors — Northrop's MX Peacekeeper program alone drew on more than 500 of them supplying 19,000 parts. The Pentagon has solid data on its primes and almost none on this layer."
+      },
+      tier1: {
+        tag: 'Tier 1 Suppliers',
+        text: "Tier 1 firms build the major subsystems — airframes, avionics, propulsion — that primes integrate into finished platforms. They're usually the last tier the government has meaningful cost visibility into."
+      },
+      primes: {
+        tag: 'Prime Contractors',
+        text: "The number of U.S. aerospace and defense prime contractors fell from 51 to just 5 since the early 1990s, largely through Pentagon-encouraged consolidation. Those five now collect roughly two-thirds of all DoD contract value."
+      }
+    };
+
+    function clearSvg(){ while(svg.firstChild) svg.removeChild(svg.firstChild); }
+
+    function build(){
+      clearSvg();
+      particles = [];
+      const cb = container.getBoundingClientRect();
+      svg.setAttribute('viewBox', `0 0 ${cb.width} ${cb.height}`);
+
+      for(let i=0;i<order.length-1;i++){
+        const lowerNodes = [...container.querySelectorAll(`[data-tier="${order[i]}"] .node-chip`)];
+        const upperNodes = [...container.querySelectorAll(`[data-tier="${order[i+1]}"] .node-chip`)];
+        if(!lowerNodes.length || !upperNodes.length) continue;
+
+        lowerNodes.forEach((lowEl, idx) => {
+          const upIdx = Math.min(upperNodes.length - 1, Math.floor(idx * upperNodes.length / lowerNodes.length));
+          const upEl = upperNodes[upIdx];
+          const lb = lowEl.getBoundingClientRect();
+          const ub = upEl.getBoundingClientRect();
+
+          const x1 = lb.left + lb.width/2 - cb.left, y1 = lb.top - cb.top;
+          const x2 = ub.left + ub.width/2 - cb.left, y2 = ub.bottom - cb.top;
+          const midY = (y1 + y2) / 2;
+
+          const path = document.createElementNS(svgns, 'path');
+          path.setAttribute('d', `M ${x1} ${y1} C ${x1} ${midY}, ${x2} ${midY}, ${x2} ${y2}`);
+          path.setAttribute('class', 'flow-path');
+          path.dataset.pair = `${order[i]}|${order[i+1]}`;
+          svg.appendChild(path);
+
+          if(!reduceMotion){
+            const len = path.getTotalLength();
+            const dot = document.createElementNS(svgns, 'circle');
+            dot.setAttribute('r', 2.6);
+            dot.setAttribute('class', 'flow-dot');
+            dot.dataset.pair = `${order[i]}|${order[i+1]}`;
+            svg.appendChild(dot);
+            particles.push({ path, len, dot, offset: Math.random(), speed: 0.00016 + Math.random()*0.00014 });
+          }
+        });
+      }
+    }
+
+    function animate(t){
+      particles.forEach(p=>{
+        const progress = (p.offset + t*p.speed) % 1;
+        const pt = p.path.getPointAtLength(progress * p.len);
+        p.dot.setAttribute('cx', pt.x);
+        p.dot.setAttribute('cy', pt.y);
+      });
+      rafId = requestAnimationFrame(animate);
+    }
+
+    function setActiveTier(tierKey){
+      document.querySelectorAll('.tier-row').forEach(row=>{
+        row.classList.toggle('active', row.dataset.tier === tierKey);
+      });
+      document.querySelectorAll('.flow-path, .flow-dot').forEach(el=>{
+        const involved = !tierKey || el.dataset.pair.split('|').includes(tierKey);
+        el.classList.toggle('active', !!tierKey && involved);
+        el.classList.toggle('dim', !!tierKey && !involved);
+      });
+      const info = tierInfo[tierKey];
+      const tagEl = document.querySelector('#flowInfo .fi-tag');
+      const textEl = document.getElementById('flowInfoText');
+      if(info){
+        tagEl.textContent = info.tag;
+        textEl.textContent = info.text;
+      } else {
+        tagEl.textContent = 'Overview';
+        textEl.textContent = 'Materials flow up, from raw ore to finished system — and the field narrows at every step. Click any tier above to see where it fits and why it matters.';
+      }
+    }
+
+    document.querySelectorAll('.tier-row').forEach(row=>{
+      row.addEventListener('click', () => {
+        const isActive = row.classList.contains('active');
+        setActiveTier(isActive ? null : row.dataset.tier);
+      });
+    });
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(build, 150);
+    });
+
+    // build once fonts/layout settle
+    window.addEventListener('load', () => {
+      build();
+      if(!reduceMotion) rafId = requestAnimationFrame(animate);
+    });
+    // also try immediately in case load already fired
+    if(document.readyState === 'complete'){
+      build();
+      if(!reduceMotion) rafId = requestAnimationFrame(animate);
+    }
+  })();
 </script>
 
 </body>
